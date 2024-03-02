@@ -1,148 +1,86 @@
-import React from "react";
+import { React, useState } from "react";
 import Shark from "../images/shark.jpg";
+import Eye from "../images/eye.svg";
 
-function Images() {
+function Images({ account, provider, contract, setImages, images }) {
+  // const [data, setData] = useState("");
+  const getdata = async () => {
+    let dataArray;
+    const Otheraddress = null;
+    // const Otheraddress = document.querySelector(".address").value;
+    try {
+      if (Otheraddress) {
+        dataArray = await contract.display(Otheraddress);
+        console.log(dataArray);
+      } else {
+        dataArray = await contract.display(account);
+      }
+    } catch (e) {
+      alert("You don't have access");
+    }
+    const isEmpty = Object.keys(dataArray).length === 0;
+
+    if (!isEmpty) {
+      const str = dataArray.toString();
+      const str_array = str.split(",");
+      // console.log(str);
+      // console.log(str_array);
+      const images = str_array.map((item, i) => {
+        return (
+          <a href={item} key={i} target="_blank">
+            <img key={i} src={item} alt="new" className="image-list"></img>
+          </a>
+        );
+      });
+      setImages(images);
+      console.log(images);
+    } else {
+      alert("No image to display");
+    }
+  };
+
   return (
-    <div className="container m-auto">
-      <div className="container text-center">
-        {/* <div class="row">
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto",
-              backgroundColor: "red",
-            }}
-          >
-            .col-6 .col-md-4
-          </div>
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto",
-              backgroundColor: "red",
-            }}
-          >
-            .col-6 .col-md-4
-          </div>
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto",
-              backgroundColor: "red",
-            }}
-          >
-            .col-6 .col-md-4
-          </div>
-        </div> */}
-
-        <div class="row">
-          {/* <img src={Shark} class="img-thumbnail" alt="..."></img>
-          <img src={Shark} class="img-thumbnail" alt="..."></img>
-          <img src={Shark} class="img-thumbnail" alt="..."></img> */}
-
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto"
-            }}
-          >
-            <img src={Shark} class="img-thumbnail" alt="..."></img>
-          </div>
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto"
-            }}
-          >
-            <img src={Shark} class="img-thumbnail" alt="..."></img>
-          </div>
-          <div
-            class="col-6 col-md-4 col-sm-2"
-            style={{
-              height: "400px",
-              width: "400px",
-              margin: "auto"
-            }}
-          >
-            <img src={Shark} class="img-thumbnail" alt="..."></img>
-          </div>
+    <>
+      <div className="container my-5 px-5">
+        <div className="mb-3" style={{ display: "flex" }}>
+          <input
+            className="form-control form-control-lg"
+            type="text"
+            readOnly
+            placeholder="Your drive"
+            id="formFile"
+            disabled={!account}
+            style={{ marginRight: "5px" }}
+            // onChange={changeHandler}
+          />
+          <button onClick={getdata}>
+            <img style={{ padding: "5px" }} src={Eye}></img>
+          </button>
+          <input
+            className="form-control form-control-lg"
+            type="text"
+            placeholder="Other's drive"
+            id="formFile"
+            disabled={!account}
+            style={{ marginRight: "5px", marginLeft: "5px" }}
+            // onChange={changeHandler}
+          />
+          <button onClick={getdata}>
+            <img style={{ padding: "5px" }} src={Eye}></img>
+          </button>
         </div>
       </div>
-    </div>
+      <div style={{ height: "300px", width: "300px" }}>
+        {images && (
+          <img
+            src={images[5]["props"]["href"]}
+            height={"200px"}
+            width={"200px"}
+          ></img>
+        )}
+      </div>
+    </>
   );
 }
 
 export default Images;
-
-// <div className="row row-cols-3 ">
-//   <div
-//     className="col"
-//     style={{ height: "400px", width: "400px", margin: "auto" }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//   <div
-//     className="col"
-//     style={{
-//       height: "400px",
-//       width: "400px",
-
-//       margin: "auto",
-//     }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//   <div
-//     className="col"
-//     style={{
-//       height: "400px",
-//       width: "400px",
-
-//       margin: "auto",
-//     }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//   <div
-//     className="col"
-//     style={{
-//       height: "400px",
-//       width: "400px",
-//       margin: "auto",
-//     }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//   <div
-//     className="col"
-//     style={{
-//       height: "400px",
-//       width: "400px",
-
-//       margin: "auto",
-//     }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//   <div
-//     className="col"
-//     style={{
-//       height: "400px",
-//       width: "400px",
-
-//       margin: "auto",
-//     }}
-//   >
-//     <img src={Shark} class="img-thumbnail" alt="..."></img>
-//   </div>
-//  </div>;

@@ -13,6 +13,7 @@ function App() {
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
   const [modalopen, setModalopen] = useState(false);
+  const [images, setImages] = useState();
 
   // const provider = new ethers.provders.
 
@@ -60,13 +61,15 @@ function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <Owner></Owner>
+      <Owner account={account}></Owner>
       <Form account={account} provider={provider} contract={contract}></Form>
-      <Share></Share>
+      <Share account={account} provider={provider} contract={contract}></Share>
       <Images
         account={account}
         provider={provider}
         contract={contract}
+        setImages={setImages}
+        images={images}
       ></Images>
     </div>
   );

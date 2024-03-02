@@ -1,9 +1,10 @@
 import React from "react";
+import "./owner.css";
 
-function Owner() {
+function Owner({ account }) {
   return (
-    <div className="container my-3">
-      <h2>Arpit's collection</h2>
+    <div className="owner">
+      <div> Drive of : {account}</div>
     </div>
   );
 }

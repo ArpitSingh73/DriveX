@@ -5,22 +5,20 @@ import "./button.css";
 // import dotenv from "dotenv";
 // dotenv.config();
 function Form({ account, provider, contract }) {
-  
   const [selectedFile, setSelectedFile] = useState(null);
 
   const changeHandler = (e) => {
     // setSelectedFile(event.target.files[0]);
 
- const data = e.target.files[0]; //files array of files object
- // console.log(data);
- const reader = new window.FileReader();
- reader.readAsArrayBuffer(data);
- reader.onloadend = () => {
-   setFile(e.target.files[0]);
- };
- setSelectedFile(e.target.files[0].name);
- e.preventDefault();
-
+    const data = e.target.files[0]; //files array of files object
+    // console.log(data);
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(data);
+    reader.onloadend = () => {
+      setSelectedFile(e.target.files[0]);
+    };
+    setSelectedFile(e.target.files[0].name);
+    e.preventDefault();
   };
 
   const handleSubmission = async () => {
@@ -43,14 +41,18 @@ function Form({ account, provider, contract }) {
         data: formData,
         headers: {
           //  Authorization: `Bearer ${import.meta.env.VITE_PINATA_JWT}`,
-          
+          pinata_api_key: "45bf80b9d27648113d50",
+          pinata_secret_api_key:
+            "1d824acd9fb31807c8905d8acee736cd5e7f5a1db087833c7775969d7de0bcb2",
+          "Content-Type": "multipart/form-data",
         },
       });
-      // const resData = await res.json();
-      // console.log(resData);
-      const hash = `ipfs://${res.data.IpfsHash}`;
+      // const resData = await JSON.parse(res);
+      console.log(res);
+      const hash = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
+      console.log(hash);
       await contract.add(account, hash);
-      selectedFile(null);
+      setSelectedFile(null);
     } catch (error) {
       console.log(error);
     }
@@ -58,17 +60,17 @@ function Form({ account, provider, contract }) {
 
   return (
     <div className="container my-5 px-5">
-      <div class="mb-3" style={{ display: "flex" }}>
+      <div className="mb-3" style={{ display: "flex" }}>
         <input
-          class="form-control form-control-lg"
+          className="form-control form-control-lg"
           type="file"
           id="formFile"
           disabled={!account}
           style={{ marginRight: "5px" }}
           onChange={changeHandler}
         />
-        <button onClick={handleSubmission}>
-          <img style={{ padding: "5px" }} src={Upload} disabled={!selectedFile}></img>
+        <button onClick={handleSubmission} disabled={!selectedFile}>
+          <img style={{ padding: "5px" }} src={Upload}></img>
         </button>
       </div>
     </div>
