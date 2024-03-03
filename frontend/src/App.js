@@ -7,6 +7,7 @@ import Form from "./components/Form";
 import Owner from "./components/Owner";
 import Images from "./components/Images";
 import Share from "./components/Share";
+import Alert from "./components/Alert";
 
 function App() {
   const [account, setAccount] = useState("");
@@ -48,7 +49,7 @@ function App() {
           );
           setContract(contract);
           setProvider(provider);
-          console.log(contract);
+          // console.log(contract);
         } else {
           alert("Please connect to Metamask !");
         }
@@ -61,6 +62,7 @@ function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
+      <Alert></Alert>
       <Owner account={account}></Owner>
       <Form account={account} provider={provider} contract={contract}></Form>
       <Share account={account} provider={provider} contract={contract}></Share>

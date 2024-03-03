@@ -4,7 +4,7 @@ import "./owner.css";
 function Owner({ account }) {
   return (
     <div className="owner">
-      <div> Drive of : {account}</div>
+      <div style={{ wordBreak: "break-word" }}> Drive of : {account}</div>
     </div>
   );
 }

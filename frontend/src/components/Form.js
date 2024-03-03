@@ -25,16 +25,7 @@ function Form({ account, provider, contract }) {
     try {
       const formData = new FormData();
       formData.append("file", selectedFile);
-      //  const metadata = JSON.stringify({
-      //    name: "File name",
-      //  });
-      //  formData.append("pinataMetadata", metadata);
-
-      //  const options = JSON.stringify({
-      //    cidVersion: 0,
-      //  });
-      //  formData.append("pinataOptions", options);
-
+    
       const res = await axios({
         method: "POST",
         url: "https://api.pinata.cloud/pinning/pinFileToIPFS",
@@ -49,10 +40,11 @@ function Form({ account, provider, contract }) {
       });
       // const resData = await JSON.parse(res);
       console.log(res);
+      // console.log(resData);
       const hash = `https://gateway.pinata.cloud/ipfs/${res.data.IpfsHash}`;
       console.log(hash);
       await contract.add(account, hash);
-      setSelectedFile(null);
+      // setSelectedFile(null);
     } catch (error) {
       console.log(error);
     }

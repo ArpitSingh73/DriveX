@@ -10,7 +10,10 @@ import Home from "../images/home.svg";
 function Navbar() {
   return (
     <>
-      <nav className="navbar navbar-expand-lg bg-body-tertiary sticky-top">
+      <nav
+        className="navbar navbar-expand-lg bg-body-tertiary sticky-top"
+        style={{ backgroundColor: "whitesmoke" }}
+      >
         <div className="container-fluid">
           <a className="navbar-brand" href="#">
             <img src={Disc}></img>

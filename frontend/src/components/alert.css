@@ -1,0 +1,23 @@
+.alert {
+  width: 95%;
+  min-height: 45px;
+  background-color: blueviolet;
+  /* font-size: ; */
+}
+
+.buttonn {
+  width: 64px;
+  margin: 3px;
+  margin-top: 0px;
+  height: 54px;
+  background-color: rgb(211, 147, 147);
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+
+.display{
+    display: none;
+}

@@ -1,7 +1,7 @@
 import { React, useState } from "react";
-import Shark from "../images/shark.jpg";
+// import Shark from "../images/shark.jpg";
 import Eye from "../images/eye.svg";
-
+import "./owner.css";
 function Images({ account, provider, contract, setImages, images }) {
   // const [data, setData] = useState("");
   const getdata = async () => {
@@ -43,6 +43,9 @@ function Images({ account, provider, contract, setImages, images }) {
     <>
       <div className="container my-5 px-5">
         <div className="mb-3" style={{ display: "flex" }}>
+          <button onClick={getdata}>
+            <img style={{ padding: "5px" }} src={Eye}></img>
+          </button>
           <input
             className="form-control form-control-lg"
             type="text"
@@ -50,12 +53,10 @@ function Images({ account, provider, contract, setImages, images }) {
             placeholder="Your drive"
             id="formFile"
             disabled={!account}
-            style={{ marginRight: "5px" }}
+            style={{ marginRight: "5px", marginLeft: "5px" }}
             // onChange={changeHandler}
           />
-          <button onClick={getdata}>
-            <img style={{ padding: "5px" }} src={Eye}></img>
-          </button>
+
           <input
             className="form-control form-control-lg"
             type="text"
@@ -70,14 +71,24 @@ function Images({ account, provider, contract, setImages, images }) {
           </button>
         </div>
       </div>
-      <div style={{ height: "300px", width: "300px" }}>
-        {images && (
-          <img
-            src={images[5]["props"]["href"]}
-            height={"200px"}
-            width={"200px"}
-          ></img>
-        )}
+
+      <div className="container text-center">
+        <div className="row  row-cols-3 ">
+          {images &&
+            images.map((item) => {
+              return (
+                <div key={item["props"]["href"]} className="col">
+                  <a href={item["props"]["href"]} target="_blank">
+                    <img
+                      src={item["props"]["href"]}
+                      className="img-thumbnail"
+                      alt="..."
+                    ></img>
+                  </a>
+                </div>
+              );
+            })}
+        </div>
       </div>
     </>
   );
