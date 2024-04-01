@@ -1,8 +1,8 @@
-.alert {
+/* .alert {
   width: 95%;
   min-height: 45px;
-  background-color: blueviolet;
-  /* font-size: ; */
+  background-color: rgb(191, 172, 209);
+ 
 }
 
 .buttonn {
@@ -10,14 +10,51 @@
   margin: 3px;
   margin-top: 0px;
   height: 54px;
-  background-color: rgb(211, 147, 147);
+  background-color: rgb(186, 178, 178);
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: pointer;
 }
 
 
 .display{
     display: none;
+} */
+.warning {
+  height: 50px;
+  margin: 15px;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 10px;
+  background-color: rgb(247, 170, 170);
+}
+
+.message {
+  font-size: x-large;
+}
+
+.cut {
+  font-size: x-large;
+  font-weight: bolder;
+  cursor: pointer;
+}
+
+.display {
+  display: none;
+}
+
+@media screen and (max-width: 485px) {
+  .message {
+    font-size: large;
+  }
+
+  .cut {
+    font-size: large;
+    font-weight: bolder;
+    cursor: pointer;
+  }
 }

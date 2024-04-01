@@ -4,16 +4,21 @@ import Slash from "../images/slash.svg";
 import UserCheck from "../images/user-check.svg";
 import "./share.css";
 
-function Share({ account, provider, contract }) {
+function Share({
+  account,
+  provider,
+  contract,
+  setIncorrectAddress,
+  setTxnCancelled,
+}) {
   const ref = useRef(null);
   const deny = useRef(null);
   const remove = useRef(null);
-  const [sharedAddress, setSharedAddress] = useState("");
+  const [sharedAddress, setSharedAddress] = useState(null);
   const [addressList, setAddressList] = useState([]);
 
   const addClass = async () => {
     contract && setAddressList(await contract.shareAccess());
-
     ref.current.classList.toggle("parent-display");
   };
 
@@ -22,20 +27,21 @@ function Share({ account, provider, contract }) {
   };
 
   const handleSharing = async () => {
-    await contract.allow(sharedAddress);
+    try {
+      await contract.allow(sharedAddress);
 
-    // setAddressList(...addressList, await contract.shareAccess());
-    window.location.reload();
-    setSharedAddress("");
+      window.location.reload();
+      setSharedAddress(null);
+    } catch (error) {
+      setTxnCancelled(true);
+      setIncorrectAddress(true);
+      // console.log(error)
+    }
   };
 
   const disAllow = async () => {
-    console.log(deny.current.innerHTML);
-    console.log(addressList);
     await contract.disallow(deny.current.innerHTML);
-    // window.location.reload()
     remove.current.classList.add("parent-display");
-    // setAddressList(...addressList, await contract.shareAccess());
   };
 
   return (
@@ -54,9 +60,8 @@ function Share({ account, provider, contract }) {
             style={{ marginRight: "5px", marginLeft: "5px" }}
             onChange={handleChange}
           />
-          <button>
+          <button disabled={!sharedAddress}>
             <img
-              disabled={!sharedAddress}
               style={{ padding: "5px" }}
               src={Share2}
               onClick={handleSharing}

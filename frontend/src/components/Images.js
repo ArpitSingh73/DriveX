@@ -2,29 +2,47 @@ import { React, useState } from "react";
 // import Shark from "../images/shark.jpg";
 import Eye from "../images/eye.svg";
 import "./owner.css";
-function Images({ account, provider, contract, setImages, images }) {
-  // const [data, setData] = useState("");
+function Images({
+  account,
+  provider,
+  contract,
+  setImages,
+  images,
+  setDriveAccess,
+  setHasImage,
+  setIncorrectAddress,
+}) {
+  const [otherAddress, setOtherAddress] = useState("");
+
+  const handleChange = (e) => {
+    setOtherAddress(e.target.value);
+  };
   const getdata = async () => {
-    let dataArray;
-    const Otheraddress = null;
-    // const Otheraddress = document.querySelector(".address").value;
+    let dataArray = [];
     try {
-      if (Otheraddress) {
-        dataArray = await contract.display(Otheraddress);
-        console.log(dataArray);
+      if (otherAddress) {
+        // console.log(otherAddress);
+        dataArray = await contract.display(otherAddress);
       } else {
+        // console.log(account);
         dataArray = await contract.display(account);
       }
     } catch (e) {
-      alert("You don't have access");
+      // console.log(e.message.substr(0,28));
+      if (e.message.substr(0, 28) === "network does not support ENS") {
+        setIncorrectAddress(true);
+        // console.log("aesrdtg");
+      } else {
+        setDriveAccess(false);
+      }
+      // console.clear()
+      return;
     }
-    const isEmpty = Object.keys(dataArray).length === 0;
+    const isEmpty = dataArray.length === 0;
 
     if (!isEmpty) {
       const str = dataArray.toString();
       const str_array = str.split(",");
-      // console.log(str);
-      // console.log(str_array);
       const images = str_array.map((item, i) => {
         return (
           <a href={item} key={i} target="_blank">
@@ -33,9 +51,10 @@ function Images({ account, provider, contract, setImages, images }) {
         );
       });
       setImages(images);
-      console.log(images);
     } else {
-      alert("No image to display");
+      // alert("No image to display");
+      setDriveAccess(true);
+      setHasImage(false);
     }
   };
 
@@ -43,7 +62,7 @@ function Images({ account, provider, contract, setImages, images }) {
     <>
       <div className="container my-5 px-5">
         <div className="mb-3" style={{ display: "flex" }}>
-          <button onClick={getdata}>
+          <button onClick={getdata} disabled={!account}>
             <img style={{ padding: "5px" }} src={Eye}></img>
           </button>
           <input
@@ -54,7 +73,6 @@ function Images({ account, provider, contract, setImages, images }) {
             id="formFile"
             disabled={!account}
             style={{ marginRight: "5px", marginLeft: "5px" }}
-            // onChange={changeHandler}
           />
 
           <input
@@ -63,10 +81,10 @@ function Images({ account, provider, contract, setImages, images }) {
             placeholder="Other's drive"
             id="formFile"
             disabled={!account}
+            onChange={handleChange}
             style={{ marginRight: "5px", marginLeft: "5px" }}
-            // onChange={changeHandler}
           />
-          <button onClick={getdata}>
+          <button onClick={getdata} disabled={!otherAddress}>
             <img style={{ padding: "5px" }} src={Eye}></img>
           </button>
         </div>

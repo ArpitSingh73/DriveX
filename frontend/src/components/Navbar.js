@@ -3,9 +3,6 @@ import Disc from "../images/disc.svg";
 import About from "../images/about.svg";
 import Home from "../images/home.svg";
 
-// import Share2 from "../images/share-2.svg";
-
-// import{ Image} from "react";
 
 function Navbar() {
   return (
@@ -41,11 +38,6 @@ function Navbar() {
                   <img src={About}></img>
                 </a>
               </li>
-              {/* <li className="nav-item">
-                <a className="nav-link" href="#">
-                  <img src={Share2}></img>
-                </a>
-              </li> */}
             </ul>
           </div>
         </div>
