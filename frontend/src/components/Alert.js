@@ -2,17 +2,16 @@ import React, { useRef } from "react";
 import "./alert.css";
 import X from "../images/x.svg";
 function Alert({
-  connected,
-  contract,
   account,
   uploading,
   driveAccess,
-  driveShared,
   txnCancelled,
   hasImage,
   incorrectAddress,
+  errorOccurred,
+  uploaded
 }) {
-  if (!connected) {
+  if (!account) {
     return (
       <div className="warning">
         <div className="message">Connect to MetaMask !</div>
@@ -27,7 +26,23 @@ function Alert({
         </div>
       </div>
     );
-  } else if (uploading) {
+  } else if (errorOccurred) {
+    return (
+      <div className="warning">
+        <div className="message">Something went wrong !</div>
+        <div
+          className="cut"
+          onClick={() => {
+            let y = document.querySelector(".warning");
+            y.classList.add("display");
+          }}
+        >
+          <img src={X}></img>
+        </div>
+      </div>
+    );
+  } 
+  else if (uploading) {
     return (
       <div className="warning">
         <div className="message">Image being uploaded</div>
@@ -45,7 +60,7 @@ function Alert({
   } else if (txnCancelled) {
     return (
       <div className="warning">
-        <div className="message">Something went wrong !!</div>
+        <div className="message">User denied transaction!</div>
         <div
           className="cut"
           onClick={() => {
@@ -57,7 +72,8 @@ function Alert({
         </div>
       </div>
     );
-  } else if (!driveAccess) {
+  }
+  else if (!driveAccess) {
     return (
       <div className="warning">
         <div className="message">No access to drive</div>
@@ -72,7 +88,8 @@ function Alert({
         </div>
       </div>
     );
-  } else if (!hasImage) {
+  }
+  else if (!hasImage) {
     return (
       <div className="warning">
         <div className="message">No image to display</div>
@@ -87,10 +104,11 @@ function Alert({
         </div>
       </div>
     );
-  } else if (incorrectAddress) {
+} 
+  else if (incorrectAddress) {
     return (
       <div className="warning">
-        <div className="message">Not a valid address</div>
+        <div className="message">Invalid address !</div>
         <div
           className="cut"
           onClick={() => {
@@ -102,7 +120,23 @@ function Alert({
         </div>
       </div>
     );
-  }
+  } 
+  else if (uploaded) {
+    return (
+      <div className="warning">
+        <div className="message">Image uploaded successfully</div>
+        <div
+          className="cut"
+          onClick={() => {
+            let y = document.querySelector(".warning");
+            y.classList.add("display");
+          }}
+        >
+          <img src={X}></img>
+        </div>
+      </div>
+    );
+  } 
 }
 
 export default Alert;

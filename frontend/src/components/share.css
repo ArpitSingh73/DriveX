@@ -1,8 +1,6 @@
 .parent {
   min-height: 48px;
   height: auto;
-  /* width: 70%; */
-  /* background-color: red; */
   border-radius: 4px;
   display: flex;
   flex-direction: column;
@@ -13,6 +11,8 @@
 .parent-display {
   display: none;
 }
+
+
 
 .son {
   display: flex;

@@ -6,10 +6,9 @@ import "./share.css";
 
 function Share({
   account,
-  provider,
   contract,
   setIncorrectAddress,
-  setTxnCancelled,
+  setTxnCancelled
 }) {
   const ref = useRef(null);
   const deny = useRef(null);
@@ -27,15 +26,20 @@ function Share({
   };
 
   const handleSharing = async () => {
+    setIncorrectAddress(false);
+    setTxnCancelled(false);
+
     try {
       await contract.allow(sharedAddress);
 
       window.location.reload();
       setSharedAddress(null);
     } catch (error) {
-      setTxnCancelled(true);
-      setIncorrectAddress(true);
-      // console.log(error)
+      if (error.info.error != undefined) {
+        if (error.info.error.code === 4001) setTxnCancelled(true);
+      } else if (error.code === "UNSUPPORTED_OPERATION") {
+        setIncorrectAddress(true);
+      }
     }
   };
 

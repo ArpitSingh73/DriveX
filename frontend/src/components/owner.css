@@ -8,8 +8,10 @@
   font-size: 150%;
   font-family: monospace;
   margin-top: 35px;
-  /* margin-left: 15px;
-  margin-right: 65px; */
   border-radius: 7px;
   padding: 15px;
+}
+
+.cursorr {
+  cursor: not-allowed;
 }

@@ -13,8 +13,14 @@ function App() {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
-  const [modalopen, setModalopen] = useState(false);
-  const [images, setImages] = useState();
+  const [errorOccurred, setErrorOccurred] = useState(false);
+  const [txnCancelled, setTxnCancelled] = useState(false);
+  const [incorrectAddress, setIncorrectAddress] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(false);
+  const [images, setImages] = useState([]);
+  const [hasImage, setHasImage] = useState(true);
+  const [driveAccess, setDriveAccess] = useState(true);
 
   // const provider = new ethers.provders.
 
@@ -62,16 +68,43 @@ function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <Alert></Alert>
+      <Alert
+        driveAccess={driveAccess}
+        hasImage={hasImage}
+        errorOccurred={errorOccurred}
+        account={account}
+        txnCancelled={txnCancelled}
+        uploading={uploading}
+        uploaded={uploaded}
+        incorrectAddress={incorrectAddress}
+      ></Alert>
       <Owner account={account}></Owner>
-      <Form account={account} provider={provider} contract={contract}></Form>
-      <Share account={account} provider={provider} contract={contract}></Share>
-      <Images
+      <Form
+        account={account}
+        provider={provider}
+        setUploading={setUploading}
+        contract={contract}
+        setErrorOccurred={setErrorOccurred}
+        setTxnCancelled={setTxnCancelled}
+        setUploaded={setUploaded}
+      ></Form>
+      <Share
         account={account}
         provider={provider}
         contract={contract}
+        setErrorOccurred={setErrorOccurred}
+        setTxnCancelled={setTxnCancelled}
+        setIncorrectAddress={setIncorrectAddress}
+      ></Share>
+      <Images
+        account={account}
+        contract={contract}
         setImages={setImages}
         images={images}
+        setTxnCancelled={setTxnCancelled}
+        setIncorrectAddress={setIncorrectAddress}
+        setHasImage={setHasImage}
+        setDriveAccess={setDriveAccess}
       ></Images>
     </div>
   );

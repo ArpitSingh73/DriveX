@@ -4,7 +4,6 @@ import Eye from "../images/eye.svg";
 import "./owner.css";
 function Images({
   account,
-  provider,
   contract,
   setImages,
   images,
@@ -18,24 +17,22 @@ function Images({
     setOtherAddress(e.target.value);
   };
   const getdata = async () => {
+    setHasImage(true);
+    setDriveAccess(true);
+    setIncorrectAddress(false);
     let dataArray = [];
     try {
       if (otherAddress) {
-        // console.log(otherAddress);
         dataArray = await contract.display(otherAddress);
       } else {
-        // console.log(account);
         dataArray = await contract.display(account);
       }
-    } catch (e) {
-      // console.log(e.message.substr(0,28));
-      if (e.message.substr(0, 28) === "network does not support ENS") {
+    } catch (error) {
+      if (error.code === "UNSUPPORTED_OPERATION") {
         setIncorrectAddress(true);
-        // console.log("aesrdtg");
-      } else {
+      } else if (error.reason === "You don't have access") {
         setDriveAccess(false);
       }
-      // console.clear()
       return;
     }
     const isEmpty = dataArray.length === 0;
@@ -52,8 +49,6 @@ function Images({
       });
       setImages(images);
     } else {
-      // alert("No image to display");
-      setDriveAccess(true);
       setHasImage(false);
     }
   };
@@ -66,7 +61,7 @@ function Images({
             <img style={{ padding: "5px" }} src={Eye}></img>
           </button>
           <input
-            className="form-control form-control-lg"
+            className="form-control form-control-lg cursorr"
             type="text"
             readOnly
             placeholder="Your drive"
