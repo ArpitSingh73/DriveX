@@ -26,7 +26,7 @@ function App() {
 
   useEffect(() => {
     const connectWallet = async () => {
-      const contractAdd = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+      const contractAdd = "0xce879b4Beb4634E3F8d0aF11d816a24e9357ABea";
       const contractABI = Drive.abi;
 
       //
